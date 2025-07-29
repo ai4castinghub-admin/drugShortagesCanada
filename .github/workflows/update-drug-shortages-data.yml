@@ -29,6 +29,9 @@ jobs:
       
       - name: Download latest data
         run: python scripts/drug-shortages-canada-website.py
+        env:
+          EMAILDRUGSHORTAGESCANADA: ${{ secrets.EMAILDRUGSHORTAGESCANADA }}
+          PASSDRUGSHORTAGESCANADA: ${{ secrets.PASSDRUGSHORTAGESCANADA }}
 
       - name: Add new files
         run: git add drug-shortages-data/  # This ensures the new 'data/' directory and its contents are added to the git index
