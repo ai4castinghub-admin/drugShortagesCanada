@@ -1,0 +1,39 @@
+name: Update Drug Shortages Data
+
+on:
+  workflow_dispatch:
+  schedule:
+    # So 21:00 UTC for safety
+    - cron: '0 21 * * FRI'
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+      
+      - name: Install Dependencies
+        run: pip install -r scripts/requirements.txt
+      
+      - name: Download latest data
+        run: python scripts/drug-shortages-canada-website.py
+
+      - name: Add new files
+        run: git add drug-shortages-data/  # This ensures the new 'data/' directory and its contents are added to the git index
+      
+      - name: Commit results
+        run: |
+          git config --local user.name "$GITHUB_ACTOR"
+          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git commit -am 'update drug shrtages data' || echo "No changes to commit"
+          git push origin || echo "No changes to commit"
