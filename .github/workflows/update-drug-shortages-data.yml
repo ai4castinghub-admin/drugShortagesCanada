@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      EMAILDRUGSHORTAGESCANADA: ${{ secrets.EMAILDRUGSHORTAGESCANADA }}
+      PASSDRUGSHORTAGESCANADA: ${{ secrets.PASSDRUGSHORTAGESCANADA }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4
