@@ -1,4 +1,4 @@
-name: Update RVDSS Data
+name: Update news Data
 
 on:
   workflow_dispatch:
