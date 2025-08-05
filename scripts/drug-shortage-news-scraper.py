@@ -122,7 +122,7 @@ def save_dataframe_safely(df, filepath):
         existing_df = pd.read_csv(filepath)
         if df.shape[1] == existing_df.shape[1]:
             # Same number of columns — concatenate and deduplicate
-            combined_df = pd.concat([existing_df, df], ignore_index=True).drop_duplicates()
+            combined_df = pd.concat([existing_df, df], ignore_index=True).drop_duplicates(subset=['link'])
             combined_df.to_csv(filepath, index=False)
             print(f"DataFrame appended and saved to {filepath}")
         else:
